@@ -4,6 +4,9 @@
 <head>
 <style>
 
+
+
+
 .undo {
 				margin-top: 20px;
 				background-color: orange;
@@ -63,16 +66,35 @@ canvas1:first-child {
 <link rel="stylesheet" href="css/activity.css">
 <script data-main="js/loader" src="lib/require.js"></script>
 <script data-main="js/loader" src="angular1.js"></script>
+ <link rel="stylesheet" href="1.css">
+    <script src="1.js"></script>
+  <script src="2.js"></script>
 </head>
 
 <body data-ng-controller="drawCtrl" data-ng-init="init()">
 <div id="main-toolbar" class="toolbar">
   <button class="toolbutton" id="activity-button" title="SugarPaintActivity"></button>
 
+ <button class="undo" data-ng-click="undo()">Undo</button>
+	
+ <button class="undo" data-ng-click="save()">Save</button>
+<button data-ng-click="draw('repeat')"><img src="leopard.jpg" id="lamp" width="32" height="32"></button>
+<button  data-ng-click="draw1('repeat')"><img src="stars.png" id="stars" width="32" height="32"></button>
+<button data-ng-click="draw2('repeat')"><img src="dots.png" id="dots" width="32" height="32"></button>
+<button data-ng-click="draw3('repeat')"><img src="patt.jpg" id="patt" width="32" height="32"></button>
+<button data-ng-click="draw4('repeat')"><img src="color.png" id="color" width="32" height="32"></button>
+	
+	
+<label class="md-only" for="st">Stroke</label>
+		<input type="color" ng-model="st" id="st" >{{st}}
+
+<label class="md-only" for="st">Fill</label>
+		<input type="color" ng-model="fl" id="fl" >{{fl}}
+
   <!-- Add more buttons here -->
 
   <!-- Buttons with class="pull-right" will be right aligned -->
-  <button class="toolbutton pull-right" id="stop-button" title="Stop"></button>
+ 
 </div>
 
 <!-- The content of your activity goes inside the canvas -->
@@ -81,33 +103,24 @@ canvas1:first-child {
 <!-- Toolbar -->
 
 <div id="tools">
-      <span><input type="radio" name="tool" value="pencil" data-ng-model="tool"> Pencil</span>
-      <span><input type="radio" name="tool" value="line" data-ng-model="tool"> Line</span>
-      <span><input type="radio" name="tool" value="rectangle" data-ng-model="tool"> Rectangle</span>
-	    <span><input type="radio" name="tool" value="circle" data-ng-model="tool"> Circle</span>
-	 <span><input type="radio" name="tool" value="triangle" data-ng-model="tool">RightTriangle</span>
-	 	 <span><input type="radio" name="tool" value="semi" data-ng-model="tool">UpSemiCircle</span>
-		 <span><input type="radio" name="tool" value="usemi" data-ng-model="tool">DownSemiCircle</span>
-		 		 <span><input type="radio" name="tool" value="pent" data-ng-model="tool">Pentagon</span>
-						 <span><input type="radio" name="tool" value="stroke1" data-ng-model="tool">RandomCircles</span>
-				<span><input type="radio" name="tool" value="stroke2" data-ng-model="tool">Stars</span>
+ <input type="radio" name="tool" value="pencil" data-ng-model="tool"> Pencil
+ <input type="radio" name="tool" value="line" data-ng-model="tool"> Line
+ <input type="radio" name="tool" value="rectangle" data-ng-model="tool"> Rectangle
+<input type="radio" name="tool" value="circle" data-ng-model="tool"> Circle
+<input type="radio" name="tool" value="triangle" data-ng-model="tool">RightTriangle
+<input type="radio" name="tool" value="semi" data-ng-model="tool">UpSemiCircle
+<input type="radio" name="tool" value="usemi" data-ng-model="tool">DownSemiCircle
+<input type="radio" name="tool" value="pent" data-ng-model="tool">Pentagon
+<input type="radio" name="tool" value="stroke1" data-ng-model="tool">RandomCircles
+<input type="radio" name="tool" value="stroke2" data-ng-model="tool">Stars
 
- <span><input type="radio" name="tool" value="stroke4" data-ng-model="tool">Sketcher</span>
-<span><input type="radio" name="tool" value="pixel" data-ng-model="tool">Pixel</span><br>
-<span><input type="radio" name="tool" value="gl" data-ng-model="tool">GreenLine</span>
-<span><input type="radio" name="tool" value="fur" data-ng-model="tool">Black Fur</span>
+<input type="radio" name="tool" value="stroke4" data-ng-model="tool">Sketcher
+<input type="radio" name="tool" value="pixel" data-ng-model="tool">Pixel
+<input type="radio" name="tool" value="gl" data-ng-model="tool">GreenLine
+<input type="radio" name="tool" value="fur" data-ng-model="tool">Black Fur
 <!--<span><input type="radio" name="tool" value="blob" data-ng-model="tool">Airbrush</span> -->
-		 <span><input type="radio" name="tool" value="tp" data-ng-model="tool">Erase Portions</span>
-      <span><button class="undo" data-ng-click="undo()">Undo</button></span>
-	
-      <span><button class="undo" data-ng-click="save()">Save</button></span>
-<span><button data-ng-click="draw('repeat')"><img src="leopard.jpg" id="lamp" width="32" height="32"></button></span>
-<span><button  data-ng-click="draw1('repeat')"><img src="stars.png" id="stars" width="32" height="32"></button></span>
-<span><button data-ng-click="draw2('repeat')"><img src="dots.png" id="dots" width="32" height="32"></button></span>
-<span><button data-ng-click="draw3('repeat')"><img src="patt.jpg" id="patt" width="32" height="32"></button></span>
-<span><button data-ng-click="draw4('repeat')"><img src="color.png" id="color" width="32" height="32"></button></span>
-	
-	
+<input type="radio" name="tool" value="tp" data-ng-model="tool">Erase Portions
+
       <input ng-model="photo"
            onchange="angular.element(this).scope().file_changed(this)"
            type="file" accept="image/*" /> 		   
@@ -124,26 +137,26 @@ canvas1:first-child {
       </div>
 
     
-<span><label class="md-only" for="st">Stroke</label>
-		<input type="color" ng-model="st" id="st" >{{st}}
-<br />
-<label class="md-only" for="st">Fill</label>
-		<input type="color" ng-model="fl" id="fl" >{{fl}}
-<br />
 		<label class="md-only" for="stw">Stroke/Eraser width</label>
 		<input type="range" ng-model="stw" min="1" max="15" id="stw" >{{stw}}
   <!--toobar ends -->
 
 
-
+	
+     <div class="container-fluid" id="parent" style="background-color:lavender; border:2px solid #cfcfcf;">
  		
-	<canvas id="canvas1" style="border:1px solid black;height:500px;">
-      Your browser does not support the canvas element.
+	<canvas id="canvas1" style="border:1px solid black;" height="520" width="1361">
+  
     </canvas>
+
+	</div>
 
 
 </div>
 <script>
+
+
+
 //Sneha Mohanty AngularJs paint app
 //controller
 var drawApp = angular.module("drawApp", []);
@@ -731,7 +744,7 @@ function midPointBtw(p1, p2) {
   };
 }
 function getPattern() {
-  var patternCanvas = document.createElement('canvas1'),
+  var patternCanvas = document.createElement('canvas'),
       dotWidth = 20,
       dotDistance = 5,
       ctx = patternCanvas.getContext('2d');
@@ -1318,6 +1331,14 @@ context.lineWidth=3;
 			buffer.pop();			
 		}
 	};
+});
+
+
+
+$(document).ready(function() {
+  var canvas1 = document.getElementById("canvas1");
+  canvas1.width = $("#parent").width();
+  canvas1.height = $("#parent").height();
 });
 
 
